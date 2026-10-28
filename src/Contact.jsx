@@ -42,31 +42,33 @@ export default function Contact() {
   const [status, setStatus] = useState("idle");
 
   async function handleSubmit(e) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    setStatus("sending");
+  e.preventDefault();
+  const form = e.currentTarget;
+  setStatus("sending");
 
-    const formData = new FormData(form);
-    formData.append("access_key", ACCESS_KEY);
-    formData.append("from_name", "Portfolio Contact Form");
+  const formData = new FormData(form);
+  formData.append("access_key", ACCESS_KEY);
+  formData.append("from_name", "Portfolio Contact Form");
 
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    console.log("Web3Forms:", data);
 
-      if (data.success) {
-        setStatus("success");
-        form.reset();
-      } else {
-        setStatus("error");
-      }
-    } catch {
+    if (data.success) {
+      setStatus("success");
+      form.reset();
+    } else {
       setStatus("error");
     }
+  } catch (err) {
+    console.error("Fetch error:", err);
+    setStatus("error");
   }
+}
 
   return (
     <section id="contact" className="px-6 py-20 bg-white/60">
@@ -137,12 +139,14 @@ export default function Contact() {
           {/* RIGHT: form */}
           <motion.form
             onSubmit={handleSubmit}
+            
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
             className="md:col-span-3 bg-white rounded-3xl p-8 shadow-lg border border-petal space-y-4"
           >
+
             {/* Spam trap: namni dhugaa hin argine, bot qofa guuta */}
             <input
               type="checkbox"
@@ -184,6 +188,7 @@ export default function Contact() {
               )}
             </div>
           </motion.form>
+          
         </div>
       </div>
     </section>
