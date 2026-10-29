@@ -414,7 +414,7 @@ function BackToTop() {
 
           <div className="flex justify-center gap-4 mt-6">
             <a
-              href="https://github.com/willpaa"
+              href="https://github.com/nejashanwar"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
